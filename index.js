@@ -7,6 +7,7 @@ const PORT = 8080;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
+app.use(morgan('tiny'));
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.originalUrl}, ${new Date().toISOString()}`);
