@@ -4,7 +4,8 @@ const app = express();
 const PORT = 8080;
 
 app.use(express.json());
-//app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
+app.use(express.static('public'));
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.originalUrl}, ${new Date().toISOString()}`);
@@ -12,7 +13,9 @@ app.use((req, res, next) => {
 });
 
 app.post("/home", (req, res) => {
-  console.log(req.body);
+  if (!req.body.goit) {
+    return res.status(400).json({status: "error", code: 400, message: "missing field goit"});
+  }
   res.json({ javascript: "object", body: req.body });
 });
 
